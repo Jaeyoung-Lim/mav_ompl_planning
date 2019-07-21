@@ -13,10 +13,15 @@
 #include <sstream>
 
 #include <Eigen/Dense>
+
+#include <ompl/base/spaces/SE3StateSpace.h>
 #include <ompl/geometric/SimpleSetup.h>
+#include <ompl/base/StateValidityChecker.h>
 
 using namespace std;
 using namespace Eigen;
+namespace ob = ompl::base;
+namespace og = ompl::geometric;
 
 class OctomapRrtPlanner
 {
@@ -29,7 +34,7 @@ class OctomapRrtPlanner
 
     void cmdloopCallback(const ros::TimerEvent& event);
     void statusloopCallback(const ros::TimerEvent& event);
-    bool isStateValid(const ob::State *state);
+    const bool isStateValid(const ob::State *state);
 
   public:
     OctomapRrtPlanner(const ros::NodeHandle& nh, const ros::NodeHandle& nh_private);

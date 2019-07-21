@@ -28,7 +28,7 @@ void OctomapRrtPlanner::statusloopCallback(const ros::TimerEvent& event){
 
 }
 
-bool OctomapRrtPlanner::isStateValid(const ob::State *state){
+const bool OctomapRrtPlanner::isStateValid(const ob::State *state){
   return true;
 }
 
@@ -43,7 +43,9 @@ void OctomapRrtPlanner::planWithSimpleSetup(){
 
   // Setup state space
   og::SimpleSetup ss(space);
-  ss.setStateValidityChecker([](const ob::State *state) { return isStateValid(state); });
+
+  // ss.setStateValidityChecker([](const ob::State *state) { return isStateValid(state); });
+  // ss.setStateValidityChecker(isStateValid);
 
   // Set random goal states
   ob::ScopedState<> start(space);
