@@ -13,6 +13,7 @@
 #include <sstream>
 
 #include <Eigen/Dense>
+#include <ompl/geometric/SimpleSetup.h>
 
 using namespace std;
 using namespace Eigen;
@@ -28,10 +29,13 @@ class OctomapRrtPlanner
 
     void cmdloopCallback(const ros::TimerEvent& event);
     void statusloopCallback(const ros::TimerEvent& event);
+    bool isStateValid(const ob::State *state);
 
   public:
     OctomapRrtPlanner(const ros::NodeHandle& nh, const ros::NodeHandle& nh_private);
     virtual ~ OctomapRrtPlanner();
+    void planWithSimpleSetup();
+
 };
 
 

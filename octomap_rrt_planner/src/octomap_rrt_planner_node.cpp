@@ -2,7 +2,6 @@
 
 #include "octomap_rrt_planner/octomap_rrt_planner.h"
 
-//using namespace RAI;
 int main(int argc, char** argv) {
   ros::init(argc,argv,"octomap_rrt_planner");
   ros::NodeHandle nh("");

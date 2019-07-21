@@ -4,6 +4,7 @@ project(octomap_rrt_planner)
 include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${Eigen_INCLUDE_DIRS})
 
 find_package(catkin_simple REQUIRED)
+find_package(ompl REQUIRED)
 catkin_simple(ALL_DEPS_REQUIRED)
 
 add_definitions(-std=c++11)
@@ -14,7 +15,8 @@ add_definitions(-std=c++11)
 cs_add_library(${PROJECT_NAME}
   src/octomap_rrt_planner.cpp 
 )
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${OMPL_LIBRARIES})
+
 
 ############
 # BINARIES #
@@ -27,4 +29,4 @@ target_link_libraries(octomap_rrt_planner_node ${PROJECT_NAME} ${catkin_LIBRARIE
 # EXPORT #
 ##########
 cs_install()
-cs_export()
+cs_export(LIBRARIES ${OMPL_LIBRARIES})
