@@ -9,6 +9,8 @@ int main(int argc, char** argv) {
 
   OctomapRrtPlanner *rrt_planner = new OctomapRrtPlanner(nh, nh_private);
 
+  rrt_planner->planWithSimpleSetup();
+
   ros::spin();
   return 0;
 }
