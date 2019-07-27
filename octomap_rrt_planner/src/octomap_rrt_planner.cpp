@@ -28,7 +28,7 @@ void OctomapRrtPlanner::statusloopCallback(const ros::TimerEvent& event){
 
 }
 
-const bool OctomapRrtPlanner::isStateValid(const ob::State *state){
+bool OctomapRrtPlanner::isStateValid(const ob::State *state){
   return true;
 }
 
