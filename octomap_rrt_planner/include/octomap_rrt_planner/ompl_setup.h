@@ -8,8 +8,12 @@
 namespace ompl {
 
 class OmplSetup : public geometric::SimpleSetup {
-    public:
-        OmplSetup() : geometric::SimpleSetup(base::StateSpacePtr(new base::RealVectorStateSpace(3))) {}
+  public:
+    OmplSetup() : geometric::SimpleSetup(base::StateSpacePtr(new base::RealVectorStateSpace(3))) {}
+
+    const base::StateSpacePtr& getGeometricComponentStateSpace() const {
+      return getStateSpace();
+    }
 
 };
 

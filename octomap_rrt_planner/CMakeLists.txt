@@ -13,7 +13,8 @@ add_definitions(-std=c++11)
 # LIBRARIES #
 #############
 cs_add_library(${PROJECT_NAME}
-  src/octomap_rrt_planner.cpp 
+  src/octomap_rrt_planner.cpp
+  src/octomap_ompl_rrt.cpp
 )
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${OMPL_LIBRARIES})
 

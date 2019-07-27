@@ -1,6 +1,7 @@
 //  June/2019, ETHZ, Jaeyoung Lim, jalim@student.ethz.ch
 
 #include "octomap_rrt_planner/octomap_rrt_planner.h"
+#include "octomap_rrt_planner/octomap_ompl_rrt.h"
 
 using namespace Eigen;
 using namespace std;
@@ -10,7 +11,8 @@ namespace og = ompl::geometric;
 //Constructor
 OctomapRrtPlanner::OctomapRrtPlanner(const ros::NodeHandle& nh, const ros::NodeHandle& nh_private):
   nh_(nh),
-  nh_private_(nh_private) {
+  nh_private_(nh_private),
+  rrt_planner_(nh, nh_private) {
 
   cmdloop_timer_ = nh_.createTimer(ros::Duration(0.01), &OctomapRrtPlanner::cmdloopCallback, this); // Define timer for constant loop rate
   statusloop_timer_ = nh_.createTimer(ros::Duration(1), &OctomapRrtPlanner::statusloopCallback, this); // Define timer for constant loop rate
@@ -33,6 +35,13 @@ bool OctomapRrtPlanner::isStateValid(const ob::State *state){
 }
 
 void OctomapRrtPlanner::planWithSimpleSetup(){
+  Eigen::Vector3d lower, upper;
+  lower << 1.0, 1.0, 1.0;
+  upper << 0.0, 0.0, 0.0;
+
+  rrt_planner_.setBounds(lower, upper);
+  rrt_planner_.setupProblem();
+
   // construct the state space we are planning in
   auto space(std::make_shared<ob::SE3StateSpace>());
   //  Set space bounds

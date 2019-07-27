@@ -18,8 +18,7 @@
 #include <ompl/geometric/SimpleSetup.h>
 #include <ompl/base/StateValidityChecker.h>
 
-#include <octomap_rrt_planner/ompl_setup.h>
-#include <octomap_rrt_planner/ompl_octomap.h>
+#include <octomap_rrt_planner/octomap_ompl_rrt.h>
 
 using namespace std;
 using namespace Eigen;
@@ -35,7 +34,8 @@ class OctomapRrtPlanner
     ros::Timer cmdloop_timer_;
     ros::Timer statusloop_timer_;
 
-    ompl::OmplSetup setup_;
+    OctomapOmplRrt rrt_planner_;
+
 
     void cmdloopCallback(const ros::TimerEvent& event);
     void statusloopCallback(const ros::TimerEvent& event);
