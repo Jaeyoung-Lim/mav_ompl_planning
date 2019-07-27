@@ -39,6 +39,22 @@ void OctomapOmplRrt::setBounds(Eigen::Vector3d& lower_bound, Eigen::Vector3d& up
 }
 
 bool OctomapOmplRrt::getPath(const Eigen::Vector3d& start, const Eigen::Vector3d& goal){
+
+  ompl::base::ScopedState<ompl::base::RealVectorStateSpace> start_ompl(
+      problem_setup_.getSpaceInformation());
+  ompl::base::ScopedState<ompl::base::RealVectorStateSpace> goal_ompl(
+      problem_setup_.getSpaceInformation());
+
+  start_ompl->values[0] = start(0);
+  start_ompl->values[1] = start(1);
+  start_ompl->values[2] = start(2);
+
+  goal_ompl->values[0] = goal(0);
+  goal_ompl->values[1] = goal(1);
+  goal_ompl->values[2] = goal(2);
+  problem_setup_.setStartAndGoalStates(start_ompl, goal_ompl);
+  problem_setup_.setup();
+
   ompl::base::PlannerStatus solved = problem_setup_.solve(1.0);
   if (solved) {
         std::cout << "Found solution:" << std::endl;
