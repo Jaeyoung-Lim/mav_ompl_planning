@@ -17,6 +17,13 @@ OctomapRrtPlanner::OctomapRrtPlanner(const ros::NodeHandle& nh, const ros::NodeH
   cmdloop_timer_ = nh_.createTimer(ros::Duration(0.01), &OctomapRrtPlanner::cmdloopCallback, this); // Define timer for constant loop rate
   statusloop_timer_ = nh_.createTimer(ros::Duration(1), &OctomapRrtPlanner::statusloopCallback, this); // Define timer for constant loop rate
 
+  Eigen::Vector3d lower, upper;
+  lower << 1.0, 1.0, 1.0;
+  upper << 0.0, 0.0, 0.0;
+
+  rrt_planner_.setBounds(lower, upper);
+  rrt_planner_.setupProblem();
+
 }
 OctomapRrtPlanner::~OctomapRrtPlanner() {
   //Destructor
@@ -35,42 +42,8 @@ bool OctomapRrtPlanner::isStateValid(const ob::State *state){
 }
 
 void OctomapRrtPlanner::planWithSimpleSetup(){
-  Eigen::Vector3d lower, upper;
-  lower << 1.0, 1.0, 1.0;
-  upper << 0.0, 0.0, 0.0;
-
-  rrt_planner_.setBounds(lower, upper);
-  rrt_planner_.setupProblem();
-
-  // construct the state space we are planning in
-  auto space(std::make_shared<ob::SE3StateSpace>());
-  //  Set space bounds
-  ob::RealVectorBounds bounds(3);
-  bounds.setLow(-1);
-  bounds.setHigh(1);
-  space->setBounds(bounds);
-
-  // Setup state space
-  og::SimpleSetup ss(space);
-
-  // ss.setStateValidityChecker([](const ob::State *state) { return isStateValid(state); });
-  // ss.setStateValidityChecker(isStateValid);
-
-  // Set random goal states
-  ob::ScopedState<> start(space);
-  start.random();
-  ob::ScopedState<> goal(space);
-  goal.random();
-
-  ss.setStartAndGoalStates(start, goal);
-
-  ob::PlannerStatus solved = ss.solve(1.0);
-  if (solved) {
-        std::cout << "Found solution:" << std::endl;
-        // print the path to screen
-        ss.simplifySolution();
-        ss.getSolutionPath().print(std::cout);
-  } else {
-    std::cout << "Solution Not found" << std::endl;
-  }
+  Eigen::Vector3d start, goal;
+  start << 0.1, 0.1, 0.1;
+  goal << 0.9, 0.9, 0.9;
+  rrt_planner_.getPath(start, goal);
 }

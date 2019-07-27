@@ -36,4 +36,16 @@ void OctomapOmplRrt::setBounds(Eigen::Vector3d& lower_bound, Eigen::Vector3d& up
   lower_bound_ = lower_bound;
   upper_bound_ = upper_bound;
 
-};
+}
+
+bool OctomapOmplRrt::getPath(const Eigen::Vector3d& start, const Eigen::Vector3d& goal){
+  ompl::base::PlannerStatus solved = problem_setup_.solve(1.0);
+  if (solved) {
+        std::cout << "Found solution:" << std::endl;
+        // print the path to screen
+        problem_setup_.simplifySolution();
+        problem_setup_.getSolutionPath().print(std::cout);
+  } else {
+    std::cout << "Solution Not found" << std::endl;
+  }  
+}

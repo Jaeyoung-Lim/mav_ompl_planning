@@ -35,6 +35,8 @@ class OctomapOmplRrt
     
     void setupProblem();
     void setBounds(Eigen::Vector3d& lower_bound, Eigen::Vector3d& upper_bound);
+    bool getPath(const Eigen::Vector3d& start, const Eigen::Vector3d& goal);
+
 };
 
 
