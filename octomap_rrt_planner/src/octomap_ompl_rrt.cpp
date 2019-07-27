@@ -16,6 +16,7 @@ OctomapOmplRrt::~OctomapOmplRrt() {
 
 void OctomapOmplRrt::setupProblem(){
 
+  problem_setup_.setOctomapCollisioNChecking();
   ompl::base::RealVectorBounds bounds(3);
   bounds.setLow(0, lower_bound_.x());
   bounds.setLow(1, lower_bound_.y());
