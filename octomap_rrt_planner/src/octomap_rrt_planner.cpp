@@ -18,8 +18,8 @@ OctomapRrtPlanner::OctomapRrtPlanner(const ros::NodeHandle& nh, const ros::NodeH
   statusloop_timer_ = nh_.createTimer(ros::Duration(1), &OctomapRrtPlanner::statusloopCallback, this); // Define timer for constant loop rate
 
   Eigen::Vector3d lower, upper;
-  lower << 1.0, 1.0, 1.0;
-  upper << 0.0, 0.0, 0.0;
+  lower << 0.0, 0.0, 0.0;
+  upper << 1.0, 1.0, 1.0;
 
   rrt_planner_.setBounds(lower, upper);
   rrt_planner_.setupProblem();
